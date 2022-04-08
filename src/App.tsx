@@ -22,7 +22,9 @@ const App: React.FC = () => {
       </Button>
 
       <br />
-      <Alert visible={visible}> hello alert </Alert>
+      <Alert visible={visible} title="test" onCancel={() => setVisible(!visible)}>
+        hello alert
+      </Alert>
       <Button onClick={() => setVisible(!visible)}>show alert</Button>
     </div>
   );
