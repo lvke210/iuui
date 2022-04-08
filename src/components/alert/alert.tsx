@@ -2,10 +2,8 @@ import React from "react";
 import classNames from "classnames";
 import Button from "../button/button";
 export type AlertType = "success" | "default" | "danger" | "warning";
+type Icancel = () => void;
 
-interface Icancel {
-  (): void;
-}
 export interface AlertProps {
   visible: boolean;
   children?: React.ReactNode;
@@ -26,7 +24,8 @@ const Alert: React.FC<AlertProps> = (props) => {
     <div style={{ display: visible ? "block" : "none" }}>
       <div className="alert-mask"></div>
       <div className={classes}>
-        <div className="alert-header">{title}</div>s<div className="alert-body">{children}</div>
+        <div className="alert-header">{title}</div>
+        <div className="alert-body">{children}</div>
         <div className="alert-footer">
           <Button onClick={onCancel}>cancel</Button>
           <Button btnType="primary">ok</Button>
