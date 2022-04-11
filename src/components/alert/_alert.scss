@@ -23,6 +23,15 @@
   background: #fff;
   border-bottom: 1px solid #f0f0f0;
   border-radius: 2px 2px 0 0;
+  position: relative;
+  .icon-x{
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px 20px;
+  }
 }
 .alert-body{
   padding: 24px;
