@@ -4,7 +4,7 @@ const defaultProps = {
   onClick: jest.fn(),
 };
 const testProps: ButtonProps = {
-  btnType: ButtonType.Primary,
+  btnType: "primary",
   size: "large",
   className: "testclass",
 };

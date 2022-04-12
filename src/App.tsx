@@ -6,7 +6,8 @@ import MenuItem from "./components/menu/menuItem";
 import SubMenu from "./components/menu/subMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-
+import Icon from "./components/icon/icon";
+import Transition from "./components/transition/transition";
 const App: React.FC = () => {
   function hclick() {
     console.log("click");
@@ -15,10 +16,15 @@ const App: React.FC = () => {
     console.log(index);
   };
   let [visible, setVisible] = useState(false);
-
+  const [show, setShow] = useState(false);
   return (
     <div className="App">
       <FontAwesomeIcon icon={faCoffee} size="10x"></FontAwesomeIcon>
+      <FontAwesomeIcon icon={faCoffee} spin></FontAwesomeIcon>
+      <FontAwesomeIcon icon={faCoffee} pulse></FontAwesomeIcon>
+      <Icon icon="coffee" theme="danger" size="10x" />
+      <Icon icon="arrow-down" theme="danger" size="10x" />
+
       <Button onClick={hclick}>default button</Button>
       <Button size="large" autoFocus>
         large button
@@ -69,6 +75,15 @@ const App: React.FC = () => {
         </SubMenu>
         <MenuItem> MenuItem4</MenuItem>
       </Menu>
+
+      <br />
+
+      <Button btnType="primary" size="large" onClick={() => setShow(!show)}>
+        Toggle
+      </Button>
+      <Transition in={show} timeout={300} animation="zoom-in-top" wrapper={true}>
+        <Button>button </Button>
+      </Transition>
     </div>
   );
 };

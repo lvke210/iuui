@@ -7,6 +7,8 @@
 //mixin
 @import "mixin";
 
+//animation
+@import "./animation";
 //button
 @import "../components/button/button";
 
@@ -15,3 +17,6 @@
 
 //alert
 @import "../components/menu/menu";
+
+//icon
+@import "../components/icon/icon";
