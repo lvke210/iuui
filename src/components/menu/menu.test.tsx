@@ -4,12 +4,12 @@ import Menu, { MenuProps } from "./menu";
 import MenuItem from "./menuItem";
 
 const testProps: MenuProps = {
-  defaultIndex: 1,
+  defaultIndex: "1",
   onSelect: jest.fn(),
   className: "test",
 };
 const testVerProps: MenuProps = {
-  defaultIndex: 1,
+  defaultIndex: "1",
   mode: "vertical",
 };
 const generateMenu = (props: JSX.IntrinsicAttributes & MenuProps & { children?: ReactNode }) => {

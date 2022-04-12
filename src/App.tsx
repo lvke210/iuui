@@ -3,10 +3,14 @@ import Button from "./components/button/button";
 import Alert from "./components/alert/alert";
 import Menu from "./components/menu/menu";
 import MenuItem from "./components/menu/menuItem";
+import SubMenu from "./components/menu/subMenu";
 const App: React.FC = () => {
   function hclick() {
     console.log("click");
   }
+  const handleSelect = (index: string | number) => {
+    console.log(index);
+  };
   let [visible, setVisible] = useState(false);
 
   return (
@@ -31,19 +35,34 @@ const App: React.FC = () => {
       <Button onClick={() => setVisible(!visible)}>show alert</Button>
 
       <br />
-      <Menu defaultIndex={0}>
-        <MenuItem index={0}> MenuItem1</MenuItem>
-        <MenuItem index={1} disabled={true}>
-          MenuItem2
-        </MenuItem>
-        <MenuItem index={2}> MenuItem3</MenuItem>
-        <MenuItem index={3}> MenuItem4</MenuItem>
+      <Menu defaultIndex="0" onSelect={(index) => handleSelect(index)}>
+        <MenuItem> MenuItem1</MenuItem>
+        <MenuItem disabled={true}>MenuItem2</MenuItem>
+        <MenuItem> MenuItem3</MenuItem>
+        <MenuItem> MenuItem4</MenuItem>
+        <SubMenu title="down-item">
+          <MenuItem> MenuItem5</MenuItem>
+          <MenuItem> MenuItem6</MenuItem>
+        </SubMenu>
       </Menu>
 
-      <Menu defaultIndex={0} mode="vertical">
+      <Menu defaultIndex="0" mode="vertical" onSelect={handleSelect}>
         <MenuItem> MenuItem1</MenuItem>
-        <MenuItem>MenuItem2</MenuItem>
+        <MenuItem> MenuItem2</MenuItem>
         <MenuItem> MenuItem3</MenuItem>
+        <MenuItem> MenuItem4</MenuItem>
+        <SubMenu title="defaultOpend" defaultOpend={true}>
+          <MenuItem> MenuItem5</MenuItem>
+          <MenuItem> MenuItem6</MenuItem>
+          <MenuItem> MenuItem5</MenuItem>
+          <MenuItem> MenuItem6</MenuItem>
+        </SubMenu>
+        <SubMenu title="closed">
+          <MenuItem> MenuItem5</MenuItem>
+          <MenuItem> MenuItem6</MenuItem>
+          <MenuItem> MenuItem5</MenuItem>
+          <MenuItem> MenuItem6</MenuItem>
+        </SubMenu>
         <MenuItem> MenuItem4</MenuItem>
       </Menu>
     </div>
