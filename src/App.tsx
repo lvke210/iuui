@@ -4,6 +4,9 @@ import Alert from "./components/alert/alert";
 import Menu from "./components/menu/menu";
 import MenuItem from "./components/menu/menuItem";
 import SubMenu from "./components/menu/subMenu";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+
 const App: React.FC = () => {
   function hclick() {
     console.log("click");
@@ -15,6 +18,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
+      <FontAwesomeIcon icon={faCoffee} size="10x"></FontAwesomeIcon>
       <Button onClick={hclick}>default button</Button>
       <Button size="large" autoFocus>
         large button
