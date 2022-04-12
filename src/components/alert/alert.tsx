@@ -16,8 +16,6 @@ export interface AlertProps {
 
 const Alert: React.FC<AlertProps> = (props) => {
   const { visible, children, className, type, title, onCancel, showClocseIcon } = props;
-  console.log(onCancel);
-
   const classes = classNames("alert", className, {
     [`alert-${type}`]: type,
   });
