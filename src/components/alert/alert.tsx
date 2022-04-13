@@ -1,7 +1,6 @@
 import React from "react";
 import classNames from "classnames";
 import Button from "../button/button";
-import Transition from "../transition/transition";
 
 export type AlertType = "success" | "default" | "danger" | "warning";
 type Icancel = () => void;
