@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        overflow: hidden;
+      }
+      #mode {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: rgb(243, 7, 7);
+        /* 给个定位*/
+        position: absolute;
+        top: 50%;
+        left: 45%;
+      }
+      .ball {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: rgb(153, 60, 60);
+        /* 给个定位*/
+        position: absolute;
+        top: 50%;
+        left: 45%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mode"></div>
+    <script>
+      let moTop = (moBottom = moLeft = moRight = false);
+      const speed = 10;
+      //onkeydown 键盘按下
+
+      //onkeyup 键盘弹起
+      console.dir(document.body);
+      onkeydown = function (e) {
+        // 当键盘按下键值等于特定值时执行为真
+
+        switch (e.keyCode) {
+          case 87:
+            moTop = true;
+            break; //w键
+          case 83:
+            moBottom = true;
+            break; //s键
+
+          case 65:
+            moLeft = true;
+            break; //a键
+
+          case 68:
+            moRight = true;
+            break; //d键
+        }
+      };
+
+      onkeyup = function (e) {
+        // 当键盘弹起键值等于特定值时执行为假
+
+        switch (e.keyCode) {
+          case 87:
+            moTop = false;
+            break; //w键
+
+          case 83:
+            moBottom = false;
+            break; //s键
+
+          case 65:
+            moLeft = false;
+            break; //a键
+
+          case 68:
+            moRight = false;
+            break;
+          // d键;
+        }
+      };
+
+      //offsetTop 获取元素距离外面上边距的距离
+
+      //offsetLeft 获取元素距离外面左边距的距离
+
+      setInterval(function () {
+        //当按下w键时执行
+
+        if (moTop) {
+          mode.style.top = mode.offsetTop - speed + "px";
+        }
+
+        //当按下s键时执行
+
+        if (moBottom) {
+          mode.style.top = mode.offsetTop + speed + "px";
+        }
+
+        //当按下a键时执行
+
+        if (moLeft) {
+          mode.style.left = mode.offsetLeft - speed + "px";
+        }
+
+        //当按下d键时执行
+
+        if (moRight) {
+          mode.style.left = mode.offsetLeft + speed + "px";
+        }
+      }, 16);
+      let playerPosition = {},
+        sysPotion = {};
+      onmousemove = (e) => {
+        mode.style.left = e.clientX - mode.offsetWidth / 2 + "px";
+        mode.style.top = e.clientY - mode.offsetHeight / 2 + "px";
+        playerPosition = {
+          x: e.clientX - 50,
+          y: e.clientY - 50,
+          r: mode.offsetWidth / 2,
+        };
+      };
+      const timers = [];
+      class createBoll {
+        crt() {
+          const ball = document.createElement("div");
+          ball.setAttribute("class", "ball");
+          document.body.appendChild(ball);
+          let speedx = Math.round((Math.random() - 0.5) * 20),
+            speedy = Math.round((Math.random() - 0.5) * 20);
+          console.log(speedx, speedy);
+
+          let timer = setInterval(() => {
+            sysPotion = {
+              x: ball.offsetLeft + ball.offsetWidth / 2,
+              y: ball.offsetTop + ball.offsetHeight / 2,
+              r: ball.offsetWidth / 2,
+            };
+            const isTached =
+              Math.pow(Math.abs(playerPosition.x - sysPotion.x), 2) +
+                Math.pow(Math.abs(playerPosition.y - sysPotion.y), 2) <
+              Math.pow(Math.abs(playerPosition.r + sysPotion.r), 2);
+            if (isTached) {
+              timers.forEach((item) => {
+                clearInterval(item);
+              });
+              alert("game over");
+              // window.location.href = "/1.html";
+            }
+            if (ball.offsetLeft <= 0 || ball.offsetLeft + ball.offsetWidth >= window.innerWidth) {
+              speedx = -speedx;
+            }
+            if (ball.offsetTop <= 0 || ball.offsetTop + ball.offsetHeight >= window.innerHeight) {
+              speedy = -speedy;
+            }
+
+            ball.style.left = ball.offsetLeft + speedx + "px";
+            ball.style.top = ball.offsetTop + speedy + "px";
+          }, 20);
+          timers.push(timer);
+        }
+      }
+
+      const ball = new createBoll();
+      for (let i = 0; i < 10; i++) {
+        ball.crt();
+      }
+    </script>
+  </body>
+</html>

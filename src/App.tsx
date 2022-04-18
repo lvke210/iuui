@@ -8,6 +8,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import Icon from "./components/icon/icon";
 import Transition from "./components/transition/transition";
+import Input from "./components/input/input";
+import AutoCompltet from "./components/autoComplete/autoComplete";
+import axios from "axios";
+import Upload from "./components/upload/upload";
 const App: React.FC = () => {
   function hclick() {
     console.log("click");
@@ -17,8 +21,52 @@ const App: React.FC = () => {
   };
   let [visible, setVisible] = useState(false);
   const [show, setShow] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    console.log(files, "files");
+    if (files) {
+      const uploadedFile = files[0];
+      const formData = new FormData();
+      formData.append(uploadedFile.name, uploadedFile);
+      axios
+        .post("https://jsonplaceholder.typicode.com/posts", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
+    }
+  };
+
+  const handleProgress = (p: any, f: any) => {
+    console.log(p, "p", f, "f");
+  };
   return (
     <div className="App">
+      <form
+        method="post"
+        action="https://jsonplaceholder.typicode.com/posts"
+        encType="multipart/form-data"
+      >
+        <input type="file" />
+        <button type="submit">提交</button>
+      </form>
+      <br />
+      <input type="file" name="myFile" />
+      <br />
+      <Upload
+        action="https://jsonplaceholder.typicode.com/posts"
+        multiple={true}
+        onProgress={handleProgress}
+        onSuccess={handleProgress}
+        onError={handleProgress}
+      />
+      <br />
+
       <FontAwesomeIcon icon={faCoffee} size="10x"></FontAwesomeIcon>
       <FontAwesomeIcon icon={faCoffee} spin></FontAwesomeIcon>
       <FontAwesomeIcon icon={faCoffee} pulse></FontAwesomeIcon>
@@ -84,6 +132,25 @@ const App: React.FC = () => {
       <Transition in={show} timeout={300} animation="zoom-in-top" wrapper={true}>
         <Button>button </Button>
       </Transition>
+
+      <br />
+
+      <AutoCompltet
+        fetchSuggestions={(value) => {
+          const data = [{ value: "aaaa" }, { value: "bbb" }, { value: "cccc" }];
+          return data.filter((item) => item.value.includes(value));
+        }}
+        style={{ width: "400px" }}
+      />
+      <Input
+        append=".com"
+        prepend={"www."}
+        style={{ width: "400px" }}
+        onChange={(e) => {
+          console.log(e.target.value);
+        }}
+      />
+      <Input icon="search" style={{ width: "400px" }}></Input>
     </div>
   );
 };
