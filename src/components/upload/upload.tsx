@@ -26,17 +26,28 @@ export interface UploadFile {
 
 export interface uploadProps {
   action: string;
+  defaultFileList?: UploadFile[];
   beforeUpload?: (file: File) => boolean | Promise<File>;
-
   onProgress?: (percentage: number, file: File) => void;
   onSuccess?: (data: any, file: File) => void;
   onError?: (err: any, file: File) => void;
   onChange?: (file: File) => void;
   multiple?: boolean;
+  onRemove?: (file: File) => void;
 }
 
 const Upload: FC<uploadProps> = (props) => {
-  const { action, onError, onProgress, onSuccess, beforeUpload, onChange, ...restProps } = props;
+  const {
+    action,
+    defaultFileList,
+    onRemove,
+    onError,
+    onProgress,
+    onSuccess,
+    beforeUpload,
+    onChange,
+    ...restProps
+  } = props;
   const fileInput = useRef<HTMLInputElement>(null);
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -103,10 +114,9 @@ const Upload: FC<uploadProps> = (props) => {
         },
         onUploadProgress: (e) => {
           let percentage = Math.round((e.loaded * 100) / e.total) || 0;
-          console.log(percentage, "percentage");
           if (percentage < 100) {
-            console.log(percentage, "percentage");
             updateFileList(_file, { percent: percentage, status: "uploading" });
+
             if (onProgress) {
               onProgress(percentage, file);
             }
@@ -115,6 +125,7 @@ const Upload: FC<uploadProps> = (props) => {
       })
       .then((res) => {
         console.log(res, "res");
+        updateFileList(_file, { status: "success", response: res.data });
         if (onSuccess) {
           onSuccess(res.data, file);
         }
@@ -123,6 +134,7 @@ const Upload: FC<uploadProps> = (props) => {
         }
       })
       .catch((err) => {
+        updateFileList(_file, { status: "error", error: err });
         if (onChange) {
           onChange(file);
         }
@@ -132,6 +144,7 @@ const Upload: FC<uploadProps> = (props) => {
         }
       });
   };
+  console.log(fileList);
 
   return (
     <div className="viking-upload-component">
